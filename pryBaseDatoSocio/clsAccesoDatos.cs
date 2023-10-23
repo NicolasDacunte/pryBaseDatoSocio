@@ -38,7 +38,7 @@ namespace pryBaseDatoSocio
             }
         }
 
-        public void TraerDatos()
+        public void TraerDatos(DataGridView grilla)
         {
             comandoBD = new OleDbCommand();
 
@@ -47,14 +47,56 @@ namespace pryBaseDatoSocio
             comandoBD.CommandText = "SOCIOS";
 
             lectorBD = comandoBD.ExecuteReader();
+            grilla.Columns.Add("Nombre", "Nombre");
+            grilla.Columns.Add("Apellido", "Apellido");
+            grilla.Columns.Add("Pais", "Pais");
 
             if (lectorBD.HasRows)
             {
                 while (lectorBD.Read())
                 {
-                    datosTabla += "-" + lectorBD[1];
+                    datosTabla += "-" + lectorBD[0];
+                    grilla.Rows.Add(lectorBD[1], lectorBD[2], lectorBD[3]);
+                }
+            }
+
+        }
+        public void BuscarPorID(int codigo)
+        {
+
+            comandoBD = new OleDbCommand();
+
+
+            comandoBD.Connection = conexionBD;
+            comandoBD.CommandType = System.Data.CommandType.TableDirect;  //q tipo de operacion quierp hacer y que me traiga TOD la tabla con el tabledirect
+            comandoBD.CommandText = "SOCIOS"; //Que tabla traigo
+
+            lectorBD = comandoBD.ExecuteReader(); //abre la tabla y muestra por renglon
+
+
+
+            if (lectorBD.HasRows) //SI TIENE FILAS
+            {
+                bool Find = false;
+                while (lectorBD.Read()) //mientras pueda leer, mostrar (leer)
+                {
+                    if (int.Parse(lectorBD[0].ToString()) == codigo)
+                    {
+
+                        //datosTabla += "-" + lectorBD[0]; //dato d la comlumna 0
+                        MessageBox.Show("Cliente Existente" + lectorBD[0], "Consulta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Find = true;
+                        break;
+                    }
+
+                }
+                if (Find = false)
+                {
+
+                    MessageBox.Show("NO Existente" + lectorBD[0], "Consulta", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
                 }
             }
         }
-    }
+    }   
 }

@@ -23,16 +23,21 @@ namespace pryBaseDatoSocio
         private void frmMain_Load(object sender, EventArgs e)
         {
             objBaseDatos = new clsAccesoDatos();
-
             objBaseDatos.ConectarBD();
-
             lblEstadoConexion.Text = objBaseDatos.estadoConexion;
-            
             lblEstadoConexion.BackColor = Color.Green;
-
-            objBaseDatos.TraerDatos();
+            objBaseDatos.TraerDatos(dgvGrilla);
 
             lblDatos.Text = objBaseDatos.datosTabla;
         }
+        private void dtvGrilla_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            objBaseDatos.BuscarPorID(int.Parse(txtBuscar.Text));
+        }
+
     }
 }
