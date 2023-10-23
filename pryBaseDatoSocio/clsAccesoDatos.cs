@@ -16,8 +16,7 @@ namespace pryBaseDatoSocio
         OleDbCommand comandoBD;
         OleDbDataReader lectorBD;
 
-        string cadenaConexion = "Provider=Microsoft.ACE.OLEDB.12.0;" +
-            "Data Source=EL_CLUB.accdb";
+        string cadenaConexion = @"Provider = Microsoft.ACE.OLEDB.12.0;" + " Data Source = ..\\..\\Resources\\EL_CLUB.accdb";
 
         public string estadoConexion="";
         public string datosTabla;
@@ -46,7 +45,7 @@ namespace pryBaseDatoSocio
             comandoBD.CommandType = System.Data.CommandType.TableDirect;
             comandoBD.CommandText = "SOCIOS";
 
-            lectorBD = comandoBD.ExecuteReader();
+            lectorBD = comandoBD.ExecuteReader();//
             grilla.Columns.Add("Nombre", "Nombre");
             grilla.Columns.Add("Apellido", "Apellido");
             grilla.Columns.Add("Pais", "Pais");
@@ -59,6 +58,8 @@ namespace pryBaseDatoSocio
                     grilla.Rows.Add(lectorBD[1], lectorBD[2], lectorBD[3]);
                 }
             }
+
+          
 
         }
         public void BuscarPorID(int codigo)
